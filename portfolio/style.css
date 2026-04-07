@@ -1,0 +1,106 @@
+/* BREAKPOINTS: mobile 320px, tablet 600px, desktop 1024px [cite: 317-324] */
+
+:root {
+  /* Task 1: Design Tokens [cite: 192, 197-218] */
+  --primary: #1a1a2e;
+  --accent: #e8d5b7;
+  --bg: #f5f4f0;
+  --white: #ffffff;
+  --black: #000000;
+  --font-main: 'Lora', serif;
+  --font-head: 'Playfair Display', serif;
+  --nav-height: 80px; 
+}
+
+/* RESET */
+* { box-sizing: border-box; }
+
+/* Font scale at 200% */
+html { 
+  font-size: 125%; 
+  scroll-behavior: smooth; 
+  scroll-padding-top: var(--nav-height); 
+}
+
+body { 
+  margin: 0; 
+  font-family: var(--font-body); 
+  background-color: var(--bg); 
+  line-height: 1.6;
+}
+
+/* Task 3: Sticky Nav [cite: 253-259] */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  height: var(--nav-height);
+  background: var(--white);
+  padding: 0 5%;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+nav ul { display: flex; list-style: none; gap: 3rem; margin: 0; padding: 0; }
+nav a { text-decoration: none; color: var(--primary); font-weight: bold; font-size: 1.2rem; }
+
+/* Making Sections feel like "Separate Pages" [cite: 171] */
+section { 
+    padding: 15rem 10%; /* Very large gap between sections */
+    min-height: 100vh;   /* Each section fills the whole screen */
+    border-bottom: 1px solid #ddd; /* Subtle line between "pages" */
+}
+
+/* Black About Section */
+header#about {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 0 10%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.header-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+
+.header-text h1 { color: var(--white); font-size: 5rem; margin: 0; }
+.header-text p { font-size: 2.5rem; font-weight: bold; color: var(--accent); }
+
+/* Smaller Profile Pic [cite: 110] */
+.profile-pic {
+    border: 4px solid var(--accent);
+    border-radius: 50%; 
+    width: 250px; 
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Task 4: Grid Layout [cite: 281-290] */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+}
+
+.card {
+  background: var(--white);
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Task 6: Table & Form [cite: 359-363] */
+table { width: 100%; border-collapse: collapse; background: white; margin-top: 2rem; }
+th, td { padding: 2rem; text-align: left; border: 1px solid #ccc; }
+
+form { background: white; padding: 3rem; border-radius: 12px; max-width: 700px; }
+input { width: 100%; padding: 1.5rem; margin: 1rem 0; border: 1px solid #ccc; font-size: 1rem; }
+button { background: var(--primary); color: white; padding: 1.5rem 3rem; border: none; cursor: pointer; font-size: 1.2rem; }
