@@ -220,3 +220,25 @@ document.querySelectorAll(".task-list").forEach(list => {
         }
     });
 });
+
+/**
+ * Step 10: Priority Filter
+ * Hides cards that don't match the selected priority.
+ */
+const priorityFilter = document.getElementById("priority-filter");
+
+priorityFilter.addEventListener("change", () => {
+    const selectedPriority = priorityFilter.value;
+    const allCards = document.querySelectorAll(".task-card");
+
+    allCards.forEach(card => {
+        // Find the text inside the badge (low, medium, or high)
+        const cardPriority = card.querySelector(".badge").textContent.toLowerCase();
+        
+        // Hide if: filter isn't "all" AND it doesn't match the card
+        const shouldHide = selectedPriority !== "all" && cardPriority !== selectedPriority;
+        
+        // Use classList.toggle as required by the rubric
+        card.classList.toggle("is-hidden", shouldHide);
+    });
+});
