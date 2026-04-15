@@ -179,6 +179,24 @@ document.querySelectorAll(".task-list").forEach(list => {
         if (action === "delete") {
             deleteTask(id);
         }
+        // If the click was on an "Edit" button
+        if (action === "edit") {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                editingTaskId = id; // Tell the app we are in Edit Mode
+                
+                // Fill the modal with the task's current data
+                document.getElementById("task-title").value = task.title;
+                document.getElementById("task-desc").value = task.description;
+                document.getElementById("task-priority").value = task.priority;
+                document.getElementById("task-date").value = task.date;
+
+                // Change the modal title so you know you're editing
+                document.querySelector(".modal-content h2").textContent = "Edit Task";
+                
+                modal.classList.remove("is-hidden"); // Open the modal
+            }
+        }
     });
 });
 
