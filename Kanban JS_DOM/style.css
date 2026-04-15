@@ -116,23 +116,34 @@ header h1 {
 }
 
 /* 7. IRIDESCENT BUTTONS: Glowing buttons that react when you hover */
+/* LANDMARK: Glowing Neon Buttons */
+/* LANDMARK: Super Neon Add Button */
 .add-btn {
     width: 100%;
     background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
     color: white;
     border: none;
-    padding: 0.8rem;
-    border-radius: 2rem;
+    padding: 1rem;
+    border-radius: 15px;
     cursor: pointer;
-    font-weight: 700;
-    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
-    transition: 0.3s ease;
-    margin-top: auto; /* Keeps button at the bottom of the column */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy movement */
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 .add-btn:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    transform: translateY(-5px) scale(1.02); /* More lift and a tiny zoom */
+    
+    /* DOUBLE LAYER GLOW: One tight bright glow, one wide soft glow */
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.8), 
+                0 0 40px rgba(139, 92, 246, 0.4);
+                
+    /* TEXT GLOW: Makes the letters look like neon bulbs */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    
+    filter: brightness(1.2);
 }
 
 /* 8. MODAL OVERLAY: Covers the whole screen with a lavender blur */
