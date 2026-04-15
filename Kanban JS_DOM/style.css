@@ -162,3 +162,17 @@ header h1 {
     transform: scale(0.9); /* Optional: makes it slightly shrink while fading */
     pointer-events: none;  /* Prevents clicking it while it's fading */
 }
+
+
+/* Step 9.2: Styling for the double-click edit box */
+.edit-input {
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #a78bfa;
+    border-radius: 8px;
+    font-size: 1.1rem; 
+    font-weight: 700;
+    color: #4c1d95;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+}
