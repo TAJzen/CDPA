@@ -179,3 +179,44 @@ document.querySelectorAll(".task-list").forEach(list => {
         }
     });
 });
+
+/**
+ * Step 9.1: Inline Editing - Double-click title to rename.
+ */
+document.querySelectorAll(".task-list").forEach(list => {
+    list.addEventListener("dblclick", (event) => {
+        // 1. Check if the thing we double-clicked is the task title
+        if (event.target.classList.contains("task-title")) {
+            const titleElement = event.target;
+            const originalText = titleElement.textContent;
+            const cardId = parseInt(titleElement.parentElement.getAttribute("data-id"));
+
+            // 2. Create an input box to replace the text
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = originalText;
+            input.classList.add("edit-input");
+
+            // 3. Swap the title for the input box
+            titleElement.replaceWith(input);
+            input.focus(); // Automatically put the typing cursor inside
+
+            // 4. Function to "Commit" (save) the change
+            const commitChange = () => {
+                const newTitle = input.value.trim() || originalText; // Don't allow empty names
+                titleElement.textContent = newTitle;
+                input.replaceWith(titleElement); // Swap back to the h3 header
+
+                // 5. Update the name in our memory array
+                const task = tasks.find(t => t.id === cardId);
+                if (task) task.title = newTitle;
+            };
+
+            // 6. Listen for the Enter key or clicking away (blur)
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") commitChange();
+            });
+            input.addEventListener("blur", commitChange);
+        }
+    });
+});
