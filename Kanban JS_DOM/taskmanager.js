@@ -27,6 +27,7 @@ function closeModal() {
     // Clear inputs
     document.getElementById("task-title").value = "";
     document.getElementById("task-desc").value = "";
+    document.getElementById("task-date").value = "";
 }
 
 /**
@@ -55,8 +56,11 @@ function createTaskCard(taskObj) {
 
     // 4. Due Date
     const dateDiv = document.createElement("div");
-    dateDiv.textContent = `Due: ${taskObj.date || "No date set"}`;
-    dateDiv.classList.add("task-date");
+    // LANDMARK: Flip the date from YYYY-MM-DD to DD/MM/YYYY
+    const rawDate = taskObj.date || "";
+    // If there is a date, split it, flip it, and join with slashes. Otherwise, say "No date"
+    const formattedDate = rawDate ? rawDate.split('-').reverse().join('/') : "No date set";
+    dateDiv.textContent = `Due: ${formattedDate}`;    dateDiv.classList.add("task-date");
 
     // 5. Action Buttons (Edit & Delete)
     const btnGroup = document.createElement("div");
