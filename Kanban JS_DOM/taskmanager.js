@@ -103,6 +103,30 @@ function addTask(columnId, taskObj) {
     updateCounter();
 }
 
+/**
+ * Step 8.1: Deletes a task with a fade-out animation.
+ */
+function deleteTask(taskId) {
+    // 1. Find the specific card using its data-id
+    const card = document.querySelector(`li[data-id="${taskId}"]`);
+
+    if (card) {
+        // 2. Add the CSS class to start the fade-out
+        card.classList.add("fade-out");
+
+        // 3. Wait 500ms (for the animation to finish) then remove it
+        setTimeout(() => {
+            card.remove(); // Remove from the screen
+
+            // 4. Remove from our 'tasks' array memory
+            tasks = tasks.filter(t => t.id !== taskId);
+
+            // 5. Update the task counter at the top
+            updateCounter();
+        }, 500);
+    }
+}
+
 // 4. EVENT LISTENERS
 document.querySelectorAll(".add-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -141,4 +165,17 @@ saveBtn.addEventListener("click", () => {
 
     // E. Close the modal and clear the form
     closeModal();
+});
+
+// Step 8.2: Event Delegation - One listener for all Delete buttons
+document.querySelectorAll(".task-list").forEach(list => {
+    list.addEventListener("click", (event) => {
+        // Check if what was clicked has the 'data-action="delete"' attribute
+        const action = event.target.getAttribute("data-action");
+        const id = parseInt(event.target.getAttribute("data-id"));
+
+        if (action === "delete") {
+            deleteTask(id);
+        }
+    });
 });
