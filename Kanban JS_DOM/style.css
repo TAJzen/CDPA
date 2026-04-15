@@ -176,3 +176,21 @@ header h1 {
     outline: none;
     background: rgba(255, 255, 255, 0.8);
 }
+
+/* Step 11.1: Final button styling */
+#clear-done-btn {
+    margin-top: 1rem;
+    background: transparent;
+    border: 2px solid #ef4444; /* Red border to show it's a "Delete" action */
+    color: #ef4444;
+    padding: 0.6rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+#clear-done-btn:hover {
+    background: #fee2e2;
+    transform: translateY(-2px);
+}

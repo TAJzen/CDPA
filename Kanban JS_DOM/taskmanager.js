@@ -8,6 +8,7 @@ const modal = document.getElementById("modal");
 const taskCounter = document.getElementById("task-counter");
 const cancelBtn = document.getElementById("cancel-task");
 const saveBtn = document.getElementById("save-task");
+const clearDoneBtn = document.getElementById("clear-done-btn");
 
 // 3. HELPER FUNCTIONS
 function updateCounter() {
@@ -240,5 +241,23 @@ priorityFilter.addEventListener("change", () => {
         
         // Use classList.toggle as required by the rubric
         card.classList.toggle("is-hidden", shouldHide);
+    });
+});
+
+/**
+ * Step 11.2: Clear All Done - Staggered Deletion.
+ * Loops through the "Done" column and deletes tasks one by one with a delay.
+ */
+clearDoneBtn.addEventListener("click", () => {
+    // 1. Find all cards specifically inside the "Done" list
+    const doneCards = document.querySelectorAll("#done-list .task-card");
+
+    // 2. Loop through them using the "index" to create a delay
+    doneCards.forEach((card, index) => {
+        // Multiply index by 150ms (0.15 seconds) to create the "domino" effect
+        setTimeout(() => {
+            const taskId = parseInt(card.getAttribute("data-id"));
+            deleteTask(taskId); // Uses our existing function from Step 8.1
+        }, index * 150);
     });
 });
