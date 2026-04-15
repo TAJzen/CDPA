@@ -3,42 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Kanban Board</title>
+    <title>Kanban Board</title>
     <style>
         /* CSS will go here */
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
-            <h1>Kanban Task Board</h1>
-            <p>Tasks: <span id="task-count">0</span></p>
+            <h1>My Kanban Task Board</h1>
+            <div class="badge" id="task-counter">0 tasks</div>
         </header>
 
-        <main class="grid">
-            <section id="todo" class="column">
+        <div class="grid">
+            <section class="card" id="todo-col">
                 <h2>To Do</h2>
                 <div id="todo-list" class="task-list"></div>
-                <button class="add-btn" data-column="todo">+ Add Task</button>
+                <button class="add-btn" data-column="todo-list">+ Add Task</button>
             </section>
 
-            <section id="inprogress" class="column">
+            <section class="card" id="inprogress-col">
                 <h2>In Progress</h2>
                 <div id="inprogress-list" class="task-list"></div>
-                <button class="add-btn" data-column="inprogress">+ Add Task</button>
+                <button class="add-btn" data-column="inprogress-list">+ Add Task</button>
             </section>
 
-            <section id="done" class="column">
+            <section class="card" id="done-col">
                 <h2>Done</h2>
                 <div id="done-list" class="task-list"></div>
-                <button class="add-btn" data-column="done">+ Add Task</button>
+                <button class="add-btn" data-column="done-list">+ Add Task</button>
             </section>
-        </main>
+        </div>
     </div>
 
     <script>
-        // JavaScript logic will go here
+        // JS will go here
     </script>
 </body>
 </html>
