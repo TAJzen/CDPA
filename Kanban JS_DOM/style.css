@@ -1,0 +1,94 @@
+/* 1. Global Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    /* Magical Lavender Gradient */
+    background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+}
+
+.container { max-width: 1000px; margin: 0 auto; }
+
+/* 2. Holographic Glass Header */
+header {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    /* Holographic Shimmer Effect */
+    background: linear-gradient(90deg, #ff00cc, #3333ff, #00ccff, #ff00cc);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: holo-shimmer 4s linear infinite;
+}
+
+@keyframes holo-shimmer {
+    to { background-position: 200% center; }
+}
+
+.badge {
+    background: #faf5ff;
+    color: #7c3aed;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border: 1px solid #d8b4fe;
+}
+
+/* 3. The Grid and Frosted Glass Cards */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.8rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px);
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    min-height: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.card h2 {
+    font-size: 1.3rem;
+    color: #4c1d95;
+    margin-bottom: 1.2rem;
+    border-left: 5px solid #a78bfa;
+    padding-left: 0.8rem;
+}
+
+/* 4. Iridescent Button */
+.add-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.5);
+}

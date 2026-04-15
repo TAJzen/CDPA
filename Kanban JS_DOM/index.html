@@ -3,34 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magical Kanban Board</title>
+    <title>Kanban Board</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>My Kanban Task Board</h1>
+            <h1>My Task Board</h1>
             <div class="badge" id="task-counter">0 tasks</div>
+            
+            <div class="filter-section">
+                <label for="priority-filter">Filter Priority:</label>
+                <select id="priority-filter">
+                    <option value="all">All</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
         </header>
 
-        <div class="grid">
+        <main class="grid">
             <section class="card" id="todo-col">
                 <h2>To Do</h2>
-                <div id="todo-list" class="task-list"></div>
+                <ul id="todo-list" class="task-list"></ul>
                 <button class="add-btn" data-column="todo-list">+ Add Task</button>
             </section>
 
             <section class="card" id="inprogress-col">
                 <h2>In Progress</h2>
-                <div id="inprogress-list" class="task-list"></div>
+                <ul id="inprogress-list" class="task-list"></ul>
                 <button class="add-btn" data-column="inprogress-list">+ Add Task</button>
             </section>
 
             <section class="card" id="done-col">
                 <h2>Done</h2>
-                <div id="done-list" class="task-list"></div>
+                <ul id="done-list" class="task-list"></ul>
                 <button class="add-btn" data-column="done-list">+ Add Task</button>
+                <button id="clear-done-btn">Clear All Done</button>
             </section>
+        </main>
+    </div>
+
+    <div id="modal" class="is-hidden">
+        <div class="modal-content">
+            <h2>New Task</h2>
+            <div class="form-group">
+                <label>Title *</label>
+                <input type="text" id="task-title" placeholder="What needs to be done?">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="task-desc" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Priority</label>
+                <select id="task-priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Due Date</label>
+                <input type="date" id="task-date">
+            </div>
+            <div class="modal-buttons">
+                <button id="save-task">Save</button>
+                <button id="cancel-task" class="secondary-btn">Cancel</button>
+            </div>
         </div>
     </div>
 
