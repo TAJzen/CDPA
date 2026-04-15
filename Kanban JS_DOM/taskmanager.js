@@ -2,6 +2,7 @@
 let tasks = []; 
 let nextId = 1;
 let currentColumnId = ""; 
+let editingTaskId = null; // Keeps track of which card we are currently editing
 
 // 2. DOM REFERENCES
 const modal = document.getElementById("modal");
