@@ -83,6 +83,26 @@ function createTaskCard(taskObj) {
     return li;
 }
 
+/**
+ * Step 7.1: Physically adds the card to the board.
+ */
+function addTask(columnId, taskObj) {
+    // 1. Add task to our 'tasks' array memory
+    tasks.push(taskObj);
+
+    // 2. Find the column <ul> on the page using the ID
+    const targetList = document.getElementById(columnId);
+
+    // 3. Use the function we made in Step 6 to build the card
+    const newCard = createTaskCard(taskObj);
+
+    // 4. Stick the card into the list
+    targetList.appendChild(newCard);
+
+    // 5. Update the "0 tasks" number at the top
+    updateCounter();
+}
+
 // 4. EVENT LISTENERS
 document.querySelectorAll(".add-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -92,3 +112,4 @@ document.querySelectorAll(".add-btn").forEach(btn => {
 });
 
 cancelBtn.addEventListener("click", closeModal);
+
