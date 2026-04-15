@@ -36,6 +36,16 @@ header h1 {
     animation: holo-shimmer 4s linear infinite;
 }
 
+#task-counter {
+    display: inline-block;
+    background: #4c1d95;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
 @keyframes holo-shimmer {
     to { background-position: 200% center; }
 }
