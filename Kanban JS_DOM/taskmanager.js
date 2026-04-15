@@ -139,36 +139,50 @@ document.querySelectorAll(".add-btn").forEach(btn => {
 
 cancelBtn.addEventListener("click", closeModal);
 
-// Step 7.2: What happens when you click "Save"
+// Step 7.2: The "Smart" Save button (Handles both Add and Edit)
 saveBtn.addEventListener("click", () => {
-    // A. Grab values from the input boxes
     const title = document.getElementById("task-title").value;
     const desc = document.getElementById("task-desc").value;
     const priority = document.getElementById("task-priority").value;
     const date = document.getElementById("task-date").value;
 
-    // B. Validation: Stop if the title is empty
     if (title.trim() === "") {
         alert("Title is required!");
         return;
     }
 
-    // C. Package the data into an object
-    const newTask = {
-        id: nextId++,
-        title: title,
-        description: desc,
-        priority: priority,
-        date: date
-    };
+    if (editingTaskId) {
+        // --- MODE A: UPDATING AN EXISTING TASK ---
+        const task = tasks.find(t => t.id === editingTaskId);
+        task.title = title;
+        task.description = desc;
+        task.priority = priority;
+        task.date = date;
 
-    // D. Run the addTask function
-    addTask(currentColumnId, newTask);
+        // Find the card on the board and update its visuals
+        const card = document.querySelector(`li[data-id="${editingTaskId}"]`);
+        card.querySelector(".task-title").textContent = title;
+        card.querySelector(".task-desc").textContent = desc;
+        card.querySelector(".badge").textContent = priority;
+        card.querySelector(".badge").className = `badge badge-${priority}`;
+        
+        editingTaskId = null; // Reset back to "Add" mode
+    } else {
+        // --- MODE B: ADDING A BRAND NEW TASK ---
+        const newTask = {
+            id: nextId++,
+            title: title,
+            description: desc,
+            priority: priority,
+            date: date
+        };
+        addTask(currentColumnId, newTask);
+    }
 
-    // E. Close the modal and clear the form
     closeModal();
+    // Change the title back to "New Task" for next time
+    document.querySelector(".modal-content h2").textContent = "New Task";
 });
-
 // Step 8.2: Event Delegation - One listener for all Delete buttons
 document.querySelectorAll(".task-list").forEach(list => {
     list.addEventListener("click", (event) => {
