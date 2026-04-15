@@ -145,6 +145,7 @@ saveBtn.addEventListener("click", () => {
     const desc = document.getElementById("task-desc").value;
     const priority = document.getElementById("task-priority").value;
     const date = document.getElementById("task-date").value;
+    const status = document.getElementById("task-status").value;
 
     if (title.trim() === "") {
         alert("Title is required!");
@@ -165,6 +166,9 @@ saveBtn.addEventListener("click", () => {
         card.querySelector(".task-desc").textContent = desc;
         card.querySelector(".badge").textContent = priority;
         card.querySelector(".badge").className = `badge badge-${priority}`;
+        // LANDMARK: Move the card to the new column
+        const newColumn = document.getElementById(status);
+        newColumn.appendChild(card);
         
         editingTaskId = null; // Reset back to "Add" mode
     } else {
@@ -198,6 +202,8 @@ document.querySelectorAll(".task-list").forEach(list => {
             const task = tasks.find(t => t.id === id);
             if (task) {
                 editingTaskId = id; // Tell the app we are in Edit Mode
+                // LANDMARK: Pre-select the current column in the dropdown
+document.getElementById("task-status").value = event.target.closest("ul").id;
                 
                 // Fill the modal with the task's current data
                 document.getElementById("task-title").value = task.title;
