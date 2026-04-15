@@ -288,19 +288,18 @@ priorityFilter.addEventListener("change", () => {
 });
 
 /**
- * Step 11.2: Clear All Done - Staggered Deletion.
- * Loops through the "Done" column and deletes tasks one by one with a delay.
+ * LANDMARK: Final Step - Clear All Done Logic
+ * Deletes all cards in the 'Done' list with a staggered animation.
  */
 clearDoneBtn.addEventListener("click", () => {
-    // 1. Find all cards specifically inside the "Done" list
+    // 1. Get all tasks only in the Done column
     const doneCards = document.querySelectorAll("#done-list .task-card");
 
-    // 2. Loop through them using the "index" to create a delay
+    // 2. Loop through them and delete with a small delay for each
     doneCards.forEach((card, index) => {
-        // Multiply index by 150ms (0.15 seconds) to create the "domino" effect
         setTimeout(() => {
             const taskId = parseInt(card.getAttribute("data-id"));
-            deleteTask(taskId); // Uses our existing function from Step 8.1
-        }, index * 150);
+            deleteTask(taskId); // Uses your existing fade-out delete function
+        }, index * 150); // 150ms delay makes them disappear one-by-one
     });
 });
