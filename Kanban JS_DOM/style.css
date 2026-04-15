@@ -39,3 +39,50 @@ header h1 {
 @keyframes holo-shimmer {
     to { background-position: 200% center; }
 }
+
+/* 3. THE GRID: Arranges your columns side-by-side  */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Creates 3 equal columns  */
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* 4. FROSTED GLASS CARDS: The column containers [cite: 2] */
+.card {
+    background: rgba(255, 255, 255, 0.35); /* Transparent white */
+    backdrop-filter: blur(10px); /* The "frosted" effect  */
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    min-height: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+}
+
+.card h2 {
+    font-size: 1.3rem;
+    color: #4c1d95;
+    margin-bottom: 1.2rem;
+    border-left: 5px solid #a78bfa; /* Magical purple accent line */
+    padding-left: 0.8rem;
+}
+
+/* 5. TASK LIST AREA: Where the cards will drop [cite: 2] */
+.task-list {
+    list-style: none;
+    flex-grow: 1; /* Makes the list take up available space */
+    min-height: 100px;
+}
+
+/* 6. RESPONSIVE FIX: Prevents the "squeezed" look on small screens  */
+@media (max-width: 800px) {
+    .grid {
+        grid-template-columns: 1fr; /* Stacks columns vertically  */
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+}
