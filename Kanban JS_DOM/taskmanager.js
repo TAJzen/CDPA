@@ -36,25 +36,49 @@ function createTaskCard(taskObj) {
     li.classList.add("task-card");
     li.setAttribute("data-id", taskObj.id);
 
+    // 1. Title
     const title = document.createElement("h3");
     title.textContent = taskObj.title;
-    
-    const p = document.createElement("p");
-    p.textContent = taskObj.description || "No description.";
+    title.classList.add("task-title");
 
+    // 2. Description
+    const p = document.createElement("p");
+    p.textContent = taskObj.description || "No description provided.";
+    p.classList.add("task-desc");
+
+    // 3. Priority Badge
     const badge = document.createElement("span");
     badge.textContent = taskObj.priority;
     badge.classList.add("badge", `badge-${taskObj.priority}`);
+
+    // 4. Due Date
+    const dateDiv = document.createElement("div");
+    dateDiv.textContent = `Due: ${taskObj.date || "No date set"}`;
+    dateDiv.classList.add("task-date");
+
+    // 5. Action Buttons (Edit & Delete)
+    const btnGroup = document.createElement("div");
+    btnGroup.classList.add("btn-group");
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.setAttribute("data-action", "edit");
+    editBtn.setAttribute("data-id", taskObj.id);
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute("data-action", "delete");
     deleteBtn.setAttribute("data-id", taskObj.id);
 
+    // 6. Assemble the card
+    btnGroup.appendChild(editBtn);
+    btnGroup.appendChild(deleteBtn);
+    
     li.appendChild(title);
     li.appendChild(p);
     li.appendChild(badge);
-    li.appendChild(deleteBtn);
+    li.appendChild(dateDiv);
+    li.appendChild(btnGroup);
 
     return li;
 }
