@@ -34,7 +34,7 @@ async function getWeatherData(cityName) {
             return;
         }
 
-        const { latitude, longitude, name } = geoData.results[0];
+        const { latitude, longitude, name, timezone } = geoData.results[0];
 
         // --- STEP 2: Weather Forecast (Coordinates -> Data) [cite: 39-40] ---
         const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=relativehumidity_2m,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
@@ -47,6 +47,7 @@ async function getWeatherData(cityName) {
         
         // SUCCESS: Show the data [cite: 41]
         renderWeather(name, weatherData);
+        fetchLocalTime(timezone);
 
     } catch (err) {
         // Task 4.19: Handle timeout or network crash [cite: 60]
@@ -138,3 +139,26 @@ document.getElementById("search-btn").addEventListener("click", () => {
     const city = document.getElementById("city-input").value;
     getWeatherData(city);
 });
+
+// LANDMARK: Task 3 - jQuery AJAX for Local Time [cite: 46-51]
+function fetchLocalTime(timezone) {
+    // 11. Use $.getJSON() to call the World TimeAPI 
+    $.getJSON(`https://worldtimeapi.org/api/timezone/${timezone}`)
+        .done(function(data) {
+            // 12. Parse the datetime string and display it [cite: 51]
+            const dateTime = data.datetime; 
+            const time = dateTime.split('T')[1].substring(0, 5); 
+            document.getElementById("local-time").textContent = `Local Time: ${time}`;
+        })
+        .fail(function() {
+            // 13. Fallback to browser's local time if API fails [cite: 51]
+            const now = new Date();
+            const fallback = now.getHours().toString().padStart(2, '0') + ":" + 
+                             now.getMinutes().toString().padStart(2, '0');
+            document.getElementById("local-time").textContent = `Local Time: ${fallback} (Local)`;
+        })
+        .always(function() {
+            // 15. Log a timestamp of the completed request to the console [cite: 51]
+            console.log("Time request cycle finished at: " + new Date().toLocaleTimeString());
+        });
+}
