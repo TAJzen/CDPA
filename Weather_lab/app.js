@@ -56,22 +56,54 @@ async function getWeatherData(cityName) {
 }
 
 // LANDMARK: Task 2.8 - Render UI using DOM Methods (No innerHTML) [cite: 41, 76]
+// LANDMARK: Task 2.8 - Populate ALL UI cards with real data [cite: 41]
 function renderWeather(name, data) {
-    toggleSkeletons(false); // Stop shimmering
+    toggleSkeletons(false); // Task 2.8: Remove skeleton classes [cite: 41]
     
     // 1. Update Main Card [cite: 21-22]
     document.getElementById("city-name").textContent = name;
     document.getElementById("temp").textContent = `${Math.round(data.current_weather.temperature)}°C`;
     
-    // 2. Data Transformation (Weather Code -> Emoji) [cite: 44]
-    const info = WEATHER_LOOKUP[data.current_weather.weathercode] || { desc: "Unknown", emoji: "☁️" };
+    const info = WEATHER_LOOKUP[data.current_weather.weathercode] || { desc: "Cloudy", emoji: "☁️" };
     document.getElementById("description").textContent = `${info.emoji} ${info.desc}`;
-
-    // 3. Humidity & Wind (Take first index from hourly data) [cite: 40, 76]
     document.getElementById("humidity").textContent = data.hourly.relativehumidity_2m[0] + "%";
     document.getElementById("wind-speed").textContent = data.current_weather.windspeed + " km/h";
 
-    console.log("Step 3 Complete for: " + name);
+    // 2. Task 2.3 & 2.8: Populate 7-Day Forecast cards [cite: 23, 41]
+    const forecastRow = document.getElementById("forecast-row");
+    forecastRow.innerHTML = ""; // Task 2.8: Clear skeletons before populating [cite: 41]
+
+    data.daily.time.forEach((date, i) => {
+        // Create the card container
+        const card = document.createElement("div");
+        card.className = "forecast-card";
+
+        // Day Name (e.g., Mon, Tue) 
+        const dayName = document.createElement("p");
+        dayName.textContent = new Date(date).toLocaleDateString('en', { weekday: 'short' });
+
+        // Weather Icon/Emoji (Task 2.10 Lookup) [cite: 44]
+        const emojiSpan = document.createElement("span");
+        const dailyInfo = WEATHER_LOOKUP[data.daily.weathercode[i]] || { emoji: "☁️" };
+        emojiSpan.textContent = dailyInfo.emoji;
+        emojiSpan.style.fontSize = "2rem";
+        emojiSpan.style.display = "block";
+
+        // High/Low Temperature 
+        const tempP = document.createElement("p");
+        tempP.style.fontWeight = "bold";
+        const high = Math.round(data.daily.temperature_2m_max[i]);
+        const low = Math.round(data.daily.temperature_2m_min[i]);
+        tempP.textContent = `${high}° / ${low}°`;
+
+        // Assemble the card [cite: 41]
+        card.appendChild(dayName);
+        card.appendChild(emojiSpan);
+        card.appendChild(tempP);
+        forecastRow.appendChild(card);
+    });
+
+    console.log("Task 2: All UI cards successfully populated.");
 }
 
 // UI HELPERS
