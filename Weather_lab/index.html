@@ -9,35 +9,43 @@
 </head>
 <body>
     <div class="container">
-        <div class="search-area">
-            <input type="text" id="search-input" placeholder="Enter city...">
-            <button id="search-btn">Search</button>
-        </div>
-
-        <div id="error-banner" class="hidden">
-            <span id="error-text"></span>
-            <button onclick="location.reload()">Retry</button>
-        </div>
-
-        <div id="current-weather" class="card skeleton">
-            <div class="content hidden">
-                <h2 id="city-name"></h2>
-                <p id="local-time"></p>
-                <h1 id="temp"></h1>
-                <p id="desc"></p>
-                <p>Humidity: <span id="hum"></span>% | Wind: <span id="wind"></span> km/h</p>
+        <header>
+            <div class="search-container">
+                <input type="text" id="city-input" placeholder="Enter city name (e.g. Johor Bahru)...">
+                <button id="search-btn">Search</button>
             </div>
-        </div>
+            <div id="error-banner" class="is-hidden">
+                <span id="error-message"></span>
+                <button onclick="location.reload()">Retry</button>
+            </div>
+        </header>
 
-        <div id="forecast-row" class="forecast-grid">
-            <div class="f-card skeleton"></div>
-            <div class="f-card skeleton"></div>
-            <div class="f-card skeleton"></div>
-            <div class="f-card skeleton"></div>
-            <div class="f-card skeleton"></div>
-            <div class="f-card skeleton"></div>
-            <div class="f-card skeleton"></div>
-        </div>
+        <main>
+            <section id="current-weather" class="card">
+                <div class="skeleton-wrapper">
+                    <h2 id="city-name" class="skeleton-text">Loading City...</h2>
+                    <p id="local-time" class="skeleton-text">--:--</p>
+                    <div class="weather-main">
+                        <h1 id="temp" class="skeleton-text">--°C</h1>
+                        <p id="description" class="skeleton-text">Fetching weather...</p>
+                    </div>
+                    <div class="weather-details">
+                        <p>Humidity: <b id="humidity" class="skeleton-text">--%</b></p>
+                        <p>Wind: <b id="wind-speed" class="skeleton-text">-- km/h</b></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="forecast-row" class="grid">
+                <div class="forecast-card skeleton"></div>
+                <div class="forecast-card skeleton"></div>
+                <div class="forecast-card skeleton"></div>
+                <div class="forecast-card skeleton"></div>
+                <div class="forecast-card skeleton"></div>
+                <div class="forecast-card skeleton"></div>
+                <div class="forecast-card skeleton"></div>
+            </section>
+        </main>
     </div>
     <script src="app.js"></script>
 </body>

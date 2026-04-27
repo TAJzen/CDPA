@@ -1,22 +1,42 @@
-* { box-sizing: border-box; font-family: sans-serif; }
-body { background: #f4f7f6; padding: 20px; }
-.container { max-width: 800px; margin: auto; }
+/* 1. LAYOUT RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 2rem; color: #1f2937; }
+.container { max-width: 900px; margin: 0 auto; }
 
-/* LANDMARK: Skeleton Shimmer [cite: 25-34] */
+/* 2. SKELETON ANIMATION (REQUIRED) [cite: 25-34] */
 @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
+
 .skeleton {
     background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
-    min-height: 150px;
     border-radius: 8px;
+    min-height: 120px;
 }
 
-.card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-.forecast-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
-.f-card { background: white; padding: 10px; border-radius: 8px; text-align: center; min-height: 120px; }
-.hidden { display: none; }
-#error-banner { background: #fee2e2; color: #b91c1c; padding: 15px; margin-bottom: 20px; border-radius: 8px; display: flex; justify-content: space-between; }
+/* For individual text lines */
+.skeleton-text {
+    background: #e0e0e0;
+    color: transparent !important;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    animation: shimmer 1.5s infinite;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+}
+
+/* 3. COMPONENT STYLING */
+.search-container { display: flex; gap: 10px; margin-bottom: 2rem; }
+#city-input { flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #ccc; outline: none; }
+#search-btn { padding: 12px 24px; border-radius: 8px; background: #3b82f6; color: white; border: none; cursor: pointer; font-weight: bold; }
+
+.card { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1rem; }
+.forecast-card { background: white; padding: 1rem; border-radius: 12px; border: 1px solid #e5e7eb; text-align: center; }
+
+#error-banner { background: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.is-hidden { display: none !important; }
