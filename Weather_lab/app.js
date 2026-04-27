@@ -9,6 +9,15 @@ const WEATHER_LOOKUP = {
     95: { desc: "Thunderstorm", emoji: "⛈️" }
 };
 
+// LANDMARK: Task 4.18 - Debounce Helper
+function debounce(func, delay = 500) {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
 // LANDMARK: Task 2 & 4 - The Main API Logic [cite: 35, 56, 76]
 async function getWeatherData(cityName) {
     const banner = document.getElementById("error-banner");
@@ -134,11 +143,20 @@ function handleFailure(msg) {
     banner.classList.remove("is-hidden");
 }
 
-// 4. EVENT LISTENERS
+// 4. EVENT LISTENERS (Updated with Debounce)
+const searchInput = document.getElementById("city-input");
+
+// Manual search on button click
 document.getElementById("search-btn").addEventListener("click", () => {
-    const city = document.getElementById("city-input").value;
-    getWeatherData(city);
+    getWeatherData(searchInput.value);
 });
+
+// Task 4.18: Automatic search while typing (Debounced)
+searchInput.addEventListener("input", debounce(() => {
+    if (searchInput.value.trim().length >= 3) {
+        getWeatherData(searchInput.value);
+    }
+}, 500));
 
 // LANDMARK: Task 3 - jQuery AJAX for Local Time [cite: 46-51]
 function fetchLocalTime(timezone) {
