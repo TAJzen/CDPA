@@ -11,7 +11,7 @@
     <div class="container">
         <div class="search-wrapper">
             <div class="search-bar">
-                <input type="text" id="city-input" placeholder="Search city (e.g. Johor)..." autocomplete="off">
+                <input type="text" id="city-input" placeholder="Type city (e.g. Johor)..." autocomplete="off">
                 <button id="search-btn">Search</button>
             </div>
             <div class="unit-controls">
@@ -34,30 +34,39 @@
             <button onclick="location.reload()" class="retry-pill">Retry</button>
         </div>
 
-        <div id="current-weather" class="weather-hero">
+        <div id="current-weather" class="weather-hero skeleton">
             <div class="hero-main">
                 <div class="location-box">
-                    <h1 id="city-name" class="skeleton-text">Dashboard Ready</h1>
+                    <h1 id="city-name" class="skeleton-text">Ready to search</h1>
+                    <p id="full-location" class="skeleton-text">Location details</p>
                     <p id="local-time" class="skeleton-text">--:--</p>
                 </div>
                 <div class="temp-display">
                     <span id="temp" class="skeleton-text">--°</span>
-                    <p id="description" class="skeleton-text">Waiting for input...</p>
+                    <p id="description" class="skeleton-text">Waiting...</p>
                 </div>
             </div>
             <div class="hero-stats">
                 <div class="stat">
                     <label>Humidity</label>
-                    <b id="humidity">--%</b>
+                    <b id="humidity" class="skeleton-text">--%</b>
                 </div>
                 <div class="stat">
                     <label>Wind Speed</label>
-                    <b id="wind-speed">-- km/h</b>
+                    <b id="wind-speed" class="skeleton-text">-- km/h</b>
                 </div>
             </div>
         </div>
 
-        <div id="forecast-row" class="forecast-grid"></div>
+        <div id="forecast-row" class="forecast-grid">
+            <div class="forecast-card skeleton"></div>
+            <div class="forecast-card skeleton"></div>
+            <div class="forecast-card skeleton"></div>
+            <div class="forecast-card skeleton"></div>
+            <div class="forecast-card skeleton"></div>
+            <div class="forecast-card skeleton"></div>
+            <div class="forecast-card skeleton"></div>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
