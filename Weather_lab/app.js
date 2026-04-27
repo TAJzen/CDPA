@@ -1,4 +1,4 @@
-// 1. WEATHER LOOKUP TABLE (Required for Task 2.10) [cite: 44]
+// LANDMARK: Task 2.10 - Weather Lookup Table [cite: 44]
 const WEATHER_LOOKUP = {
     0: { desc: "Clear sky", emoji: "☀️" },
     1: { desc: "Mainly clear", emoji: "🌤️" },
@@ -9,84 +9,88 @@ const WEATHER_LOOKUP = {
     95: { desc: "Thunderstorm", emoji: "⛈️" }
 };
 
-// 2. MAIN FETCH FUNCTION (Task 2 & 4) [cite: 35, 56]
+// LANDMARK: Task 2 & 4 - The Main API Logic [cite: 35, 56, 76]
 async function getWeatherData(cityName) {
-    const errorBanner = document.getElementById("error-banner");
-    const errorMsg = document.getElementById("error-message");
+    const banner = document.getElementById("error-banner");
+    const message = document.getElementById("error-message");
 
-    // Task 4.19: 10s Timeout using AbortController [cite: 59-63]
+    // Task 4.19: 10s Timeout via AbortController [cite: 59-63]
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     try {
-        // Reset UI state
-        errorBanner.classList.add("is-hidden");
-        toggleSkeletons(true);
+        banner.classList.add("is-hidden"); // Hide previous errors
+        toggleSkeletons(true); // Start shimmer
 
-        // --- STEP A: Geocoding API (Task 2.5) --- [cite: 37]
-        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=1&language=en&format=json`;
-        const geoResponse = await fetch(geoUrl, { signal: controller.signal });
+        // --- STEP 1: Geocoding (City Name -> Coordinates) [cite: 37] ---
+        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=1`;
+        const geoRes = await fetch(geoUrl, { signal: controller.signal });
         
-        // Task 4.16: Explicit HTTP Error Check [cite: 57]
-        if (!geoResponse.ok) throw new Error(`HTTP Error: ${geoResponse.status}`);
-        
-        const geoData = await geoResponse.json();
+        if (!geoRes.ok) throw new Error(`HTTP Error: ${geoRes.status}`); // Task 4.16 [cite: 57]
+        const geoData = await geoRes.json();
 
-        // Task 2.6: Handle City Not Found (Do NOT throw) [cite: 38]
-        if (!geoData.results || geoData.results.length === 0) {
+        if (!geoData.results) { // Task 2.6: City not found [cite: 38]
             handleFailure("City not found. Please try again.");
             return;
         }
 
         const { latitude, longitude, name } = geoData.results[0];
 
-        // --- STEP B: Weather Forecast API (Task 2.7) --- [cite: 39, 40]
-        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
-        const weatherResponse = await fetch(weatherUrl, { signal: controller.signal });
+        // --- STEP 2: Weather Forecast (Coordinates -> Data) [cite: 39-40] ---
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=relativehumidity_2m,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+        const weatherRes = await fetch(weatherUrl, { signal: controller.signal });
         
-        if (!weatherResponse.ok) throw new Error(`Weather API Error: ${weatherResponse.status}`);
+        if (!weatherRes.ok) throw new Error(`Weather API Error: ${weatherRes.status}`);
+        const weatherData = await weatherRes.json();
+
+        clearTimeout(timeoutId); // Stop the 10s timer
         
-        const weatherData = await weatherResponse.json();
-        
-        // Success: Clear the timeout and update UI
-        clearTimeout(timeoutId);
+        // SUCCESS: Show the data [cite: 41]
         renderWeather(name, weatherData);
 
-    } catch (error) {
-        // Task 4.19/20: Handle Timeout or Network Failures [cite: 60]
-        const message = error.name === "AbortError" ? "Request timed out (10s)." : "Network error. Please check your connection.";
-        handleFailure(message);
+    } catch (err) {
+        // Task 4.19: Handle timeout or network crash [cite: 60]
+        const errMsg = err.name === 'AbortError' ? "Request timed out (10s)." : "Network error. Please check your connection.";
+        handleFailure(errMsg);
     }
 }
 
-// 3. UI HELPERS (No innerHTML as per Task 2.8) [cite: 41]
+// LANDMARK: Task 2.8 - Render UI using DOM Methods (No innerHTML) [cite: 41, 76]
 function renderWeather(name, data) {
-    toggleSkeletons(false); // Task 2.8: Remove skeleton classes on success [cite: 41]
+    toggleSkeletons(false); // Stop shimmering
     
-    // Update main card
+    // 1. Update Main Card [cite: 21-22]
     document.getElementById("city-name").textContent = name;
     document.getElementById("temp").textContent = `${Math.round(data.current_weather.temperature)}°C`;
     
+    // 2. Data Transformation (Weather Code -> Emoji) [cite: 44]
     const info = WEATHER_LOOKUP[data.current_weather.weathercode] || { desc: "Unknown", emoji: "☁️" };
     document.getElementById("description").textContent = `${info.emoji} ${info.desc}`;
-    document.getElementById("humidity").textContent = `${data.current_weather.weathercode}%`; // Placeholder for humidity
 
-    console.log("Weather Data Loaded for:", name);
+    // 3. Humidity & Wind (Take first index from hourly data) [cite: 40, 76]
+    document.getElementById("humidity").textContent = data.hourly.relativehumidity_2m[0] + "%";
+    document.getElementById("wind-speed").textContent = data.current_weather.windspeed + " km/h";
+
+    console.log("Step 3 Complete for: " + name);
 }
 
+// UI HELPERS
 function toggleSkeletons(show) {
-    const mainCard = document.getElementById("current-weather");
-    const textLines = document.querySelectorAll(".skeleton-text");
-    const forecastCards = document.querySelectorAll(".forecast-card");
+    const main = document.getElementById("current-weather");
+    const texts = document.querySelectorAll(".skeleton-text");
+    const cards = document.querySelectorAll(".forecast-card");
 
     if (show) {
-        mainCard.classList.add("skeleton");
-        textLines.forEach(line => line.classList.add("skeleton-text"));
-        forecastCards.forEach(card => card.classList.add("skeleton"));
+        main.classList.add("skeleton");
+        texts.forEach(t => t.classList.add("skeleton-text"));
+        cards.forEach(c => c.classList.add("skeleton"));
     } else {
-        mainCard.classList.remove("skeleton");
-        textLines.forEach(line => line.classList.remove("skeleton-text"));
-        forecastCards.forEach(card => card.classList.remove("skeleton"));
+        main.classList.remove("skeleton");
+        texts.forEach(t => {
+            t.classList.remove("skeleton-text");
+            t.style.color = "inherit"; // Ensure text is visible
+        });
+        cards.forEach(c => c.classList.remove("skeleton"));
     }
 }
 
@@ -99,5 +103,6 @@ function handleFailure(msg) {
 
 // 4. EVENT LISTENERS
 document.getElementById("search-btn").addEventListener("click", () => {
-    getWeatherData(document.getElementById("city-input").value);
+    const city = document.getElementById("city-input").value;
+    getWeatherData(city);
 });
