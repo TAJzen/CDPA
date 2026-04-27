@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherNow Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="search-area">
+            <input type="text" id="search-input" placeholder="Enter city...">
+            <button id="search-btn">Search</button>
+        </div>
+
+        <div id="error-banner" class="hidden">
+            <span id="error-text"></span>
+            <button onclick="location.reload()">Retry</button>
+        </div>
+
+        <div id="current-weather" class="card skeleton">
+            <div class="content hidden">
+                <h2 id="city-name"></h2>
+                <p id="local-time"></p>
+                <h1 id="temp"></h1>
+                <p id="desc"></p>
+                <p>Humidity: <span id="hum"></span>% | Wind: <span id="wind"></span> km/h</p>
+            </div>
+        </div>
+
+        <div id="forecast-row" class="forecast-grid">
+            <div class="f-card skeleton"></div>
+            <div class="f-card skeleton"></div>
+            <div class="f-card skeleton"></div>
+            <div class="f-card skeleton"></div>
+            <div class="f-card skeleton"></div>
+            <div class="f-card skeleton"></div>
+            <div class="f-card skeleton"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
